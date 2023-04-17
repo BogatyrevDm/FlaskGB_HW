@@ -13,6 +13,8 @@ def create_app() -> Flask:
 
     db.init_app(app)
 
+    from .models import User
+
     register_blueprints(app)
     return app
 
@@ -20,5 +22,4 @@ def create_app() -> Flask:
 def register_blueprints(app: Flask):
     app.register_blueprint(user)
     app.register_blueprint(article)
-
 

@@ -1,18 +1,17 @@
 from flask import Blueprint, render_template, redirect
 from werkzeug.exceptions import NotFound
 
+
+
 user = Blueprint("user", __name__, url_prefix='/users', static_folder='../static')
 
-USERS = {
-    1: 'Natalia',
-    2: 'Svetlana',
-    3: 'Anna',
-}
 
 
 @user.route('/')
 def user_list():
-    return render_template('users/list.html', users=USERS)
+    from blog.models import User
+    users = User.query.all()
+    return render_template('users/list.html', users=users)
 
 
 @user.route('/<int:pk>')
