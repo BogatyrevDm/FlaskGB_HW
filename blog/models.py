@@ -1,4 +1,5 @@
 from blog.app import db
+from sqlalchemy.orm import relationship
 
 
 class User(db.Model):
