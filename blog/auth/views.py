@@ -1,10 +1,11 @@
 from werkzeug.security import check_password_hash
 from flask import Blueprint, render_template, redirect, request, url_for, flash
+from flask_login import logout_user, login_user, login_required
 from werkzeug.exceptions import NotFound
 
-
-
 auth = Blueprint("auth", __name__, static_folder='../static')
+
+
 @auth.route('/login', methods=['POST', "GET"])
 def login():
     if request.method == 'GET':
@@ -19,8 +20,12 @@ def login():
     if not user or not check_password_hash(user.password, password):
         flash('Check your login!')
         return redirect(url_for('.login'))
+    login_user(user)
     return redirect(url_for('user.profile', pk=user.id))
 
+
 @auth.route('/logout')
+@login_required
 def logout():
-    return 12
+    logout_user()
+    return redirect(url_for('.login'))
